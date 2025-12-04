@@ -49,12 +49,13 @@ async function saveConfessions(data) {
     }
 }
 
-// Profanity filter (basic)
+// Profanity filter (basic - word boundaries only)
 function filterProfanity(text) {
-    const badWords = ['fuck', 'shit', 'damn', 'bitch', 'ass', 'hell'];
+    const badWords = ['fuck', 'shit', 'damn', 'bitch'];
     let filtered = text;
     badWords.forEach(word => {
-        const regex = new RegExp(word, 'gi');
+        // Use word boundaries \b to match whole words only
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
         filtered = filtered.replace(regex, '*'.repeat(word.length));
     });
     return filtered;
