@@ -1,0 +1,740 @@
+/* Ouija Board Styles - Following Horror Design System */
+
+.ouija-section {
+    margin: 3rem 0;
+    animation: fade-in-up 1.5s ease-out;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.séance-circle {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: radial-gradient(circle at center,
+        rgba(26, 26, 46, 0.6) 0%,
+        rgba(10, 10, 10, 0.8) 70%,
+        transparent 100%);
+    border-radius: 50%;
+    position: relative;
+    animation: breathe-circle 4s ease-in-out infinite;
+}
+
+@keyframes breathe-circle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.séance-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    height: 95%;
+    border: 2px dashed var(--spectral-green);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: rotate-circle 30s linear infinite,
+               pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes rotate-circle {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulse-border {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Ouija Board */
+.ouija-board {
+    background: linear-gradient(135deg,
+        #2a1810 0%,
+        #1a0f08 50%,
+        #0f0805 100%);
+    border: 3px solid #3a2820;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.8),
+        inset 0 0 30px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(139, 0, 0, 0.3);
+    animation: board-flicker 5s steps(3) infinite;
+}
+
+@keyframes board-flicker {
+    0%, 90%, 100% { opacity: 1; }
+    93%, 97% { opacity: 0.95; }
+}
+
+.ouija-board::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.1) 2px,
+            rgba(0, 0, 0, 0.1) 4px
+        );
+    pointer-events: none;
+    border-radius: 20px;
+}
+
+/* Board Header */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.board-text {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    color: var(--ghost-white);
+    text-shadow: 
+        0 0 10px var(--spectral-green),
+        2px 2px 0 var(--blood-red);
+    animation: mystical-glow 2s ease-in-out infinite alternate;
+}
+
+.board-text.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.board-text.clickable:hover {
+    transform: scale(1.2);
+    text-shadow: 
+        0 0 20px var(--spectral-green),
+        0 0 40px var(--spectral-green),
+        2px 2px 0 var(--blood-red);
+}
+
+.board-text.clickable:active {
+    transform: scale(1.1);
+    animation: spirit-answer 1s ease-out;
+}
+
+@keyframes spirit-answer {
+    0%, 100% { 
+        transform: scale(1.1);
+        filter: brightness(1);
+    }
+    50% { 
+        transform: scale(1.3);
+        filter: brightness(2);
+    }
+}
+
+@keyframes mystical-glow {
+    0% { 
+        text-shadow: 
+            0 0 10px var(--spectral-green),
+            2px 2px 0 var(--blood-red);
+    }
+    100% { 
+        text-shadow: 
+            0 0 20px var(--spectral-green),
+            0 0 30px var(--spectral-green),
+            2px 2px 0 var(--blood-red);
+    }
+}
+
+.board-ornament {
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+    opacity: 0.7;
+    animation: rotate-ornament 10s linear infinite;
+}
+
+@keyframes rotate-ornament {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Letter Rows */
+.letter-rows {
+    margin: 2rem 0;
+}
+
+.letter-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.number-row {
+    gap: 0.3rem;
+}
+
+/* Letters */
+.letter {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Creepster', cursive;
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+    background: rgba(26, 26, 46, 0.3);
+    border: 2px solid rgba(224, 224, 224, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+    position: relative;
+    animation: letter-breathe 3s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+@keyframes letter-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.letter:hover {
+    background: rgba(0, 255, 65, 0.2);
+    border-color: var(--spectral-green);
+    transform: scale(1.2) translateY(-5px);
+    box-shadow: 
+        0 0 20px var(--spectral-green),
+        0 5px 15px rgba(0, 0, 0, 0.5),
+        inset 0 0 10px rgba(0, 255, 65, 0.3);
+    text-shadow: 
+        0 0 10px var(--spectral-green),
+        0 0 20px var(--spectral-green);
+    z-index: 10;
+}
+
+.letter:active {
+    transform: scale(1.1) translateY(-2px);
+    animation: letter-pulse 0.3s ease-out;
+}
+
+@keyframes letter-pulse {
+    0%, 100% { box-shadow: 0 0 20px var(--spectral-green); }
+    50% { box-shadow: 0 0 40px var(--spectral-green), 0 0 60px var(--spectral-green); }
+}
+
+.letter.active {
+    background: var(--spectral-green);
+    color: var(--void-black);
+    border-color: var(--spectral-green);
+    box-shadow: 
+        0 0 30px var(--spectral-green),
+        0 0 50px var(--spectral-green),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: letter-selected 0.5s ease-out;
+}
+
+@keyframes letter-selected {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(1); }
+}
+
+.letter.special {
+    width: auto;
+    padding: 0 1rem;
+    font-size: 1rem;
+    background: rgba(139, 0, 0, 0.2);
+    border-color: rgba(139, 0, 0, 0.4);
+}
+
+.letter.special:hover {
+    background: rgba(139, 0, 0, 0.4);
+    border-color: var(--blood-red);
+    box-shadow: 
+        0 0 20px var(--blood-red),
+        inset 0 0 10px rgba(139, 0, 0, 0.5);
+}
+
+/* Board Footer */
+.board-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.goodbye {
+    font-family: 'Creepster', cursive;
+    font-size: 2.5rem;
+    padding: 1.2rem 4rem;
+    min-width: 250px;
+    background: linear-gradient(135deg, var(--blood-red) 0%, #4a0000 100%);
+    border: 4px solid var(--blood-red);
+    color: var(--ghost-white);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 0 30px var(--blood-red),
+        0 0 50px rgba(139, 0, 0, 0.5),
+        inset 0 0 15px rgba(0, 0, 0, 0.5);
+    animation: goodbye-pulse 2s ease-in-out infinite;
+    position: relative;
+    overflow: visible;
+    font-weight: bold;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+@keyframes goodbye-pulse {
+    0%, 100% { 
+        box-shadow: 0 0 30px var(--blood-red), 0 0 50px rgba(139, 0, 0, 0.5);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 50px var(--blood-red), 0 0 80px var(--blood-red), 0 0 100px rgba(139, 0, 0, 0.8);
+        transform: scale(1.08);
+    }
+}
+
+.goodbye::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.goodbye:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.goodbye:hover {
+    transform: scale(1.15);
+    box-shadow: 
+        0 0 50px var(--blood-red),
+        0 0 80px var(--blood-red),
+        0 0 100px rgba(139, 0, 0, 0.8),
+        inset 0 0 25px rgba(255, 0, 0, 0.4);
+    border-color: #ff0000;
+}
+
+.goodbye:active {
+    transform: scale(0.95);
+    animation: screen-shake 0.3s ease-out;
+}
+
+@keyframes screen-shake {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5px, 5px); }
+    50% { transform: translate(5px, -5px); }
+    75% { transform: translate(-5px, -5px); }
+}
+
+/* Planchette */
+.planchette {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(224, 224, 224, 0.9) 0%, rgba(180, 180, 180, 0.8) 100%);
+    border: 3px solid var(--ghost-white);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 
+        0 5px 20px rgba(0, 0, 0, 0.8),
+        0 0 30px var(--spectral-green),
+        inset 0 0 20px rgba(0, 255, 65, 0.3);
+    animation: planchette-float 2s ease-in-out infinite;
+    transition: left 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                top 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes planchette-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+.planchette-eye {
+    font-size: 2rem;
+    animation: eye-blink 4s steps(1) infinite;
+    filter: drop-shadow(0 0 10px var(--spectral-green));
+}
+
+@keyframes eye-blink {
+    0%, 95%, 100% { opacity: 1; }
+    96%, 98% { opacity: 0; }
+}
+
+/* Message Display */
+.message-display {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.8);
+    border: 2px solid var(--spectral-green);
+    border-radius: 10px;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 65, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: message-glow 3s ease-in-out infinite;
+    min-height: 150px;
+    position: relative;
+}
+
+/* Typing Indicators */
+.typing-indicator {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(0 0 20px var(--spectral-green))
+            drop-shadow(0 0 40px var(--spectral-green));
+    pointer-events: none;
+    z-index: 10;
+}
+
+.typing-left {
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+}
+
+.typing-right {
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+}
+
+.typing-indicator.active {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+    animation: ghost-float 2s ease-in-out infinite,
+               ghost-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes ghost-float {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-60%) scale(1.1);
+    }
+}
+
+@keyframes ghost-glow {
+    0%, 100% {
+        filter: drop-shadow(0 0 20px var(--spectral-green))
+                drop-shadow(0 0 40px var(--spectral-green));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px var(--spectral-green))
+                drop-shadow(0 0 60px var(--spectral-green))
+                drop-shadow(0 0 80px var(--blood-red));
+    }
+}
+
+@keyframes message-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 0, 0, 0.5); }
+    50% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.5); }
+}
+
+.current-message {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+    min-height: 100px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    animation: text-flicker 0.5s steps(2) infinite;
+    word-wrap: break-word;
+    line-height: 1.8;
+    padding: 1rem;
+}
+
+@keyframes text-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; }
+}
+
+.message-counter {
+    text-align: right;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--ghost-white);
+    opacity: 0.6;
+}
+
+#charCount {
+    color: var(--spectral-green);
+    font-weight: bold;
+}
+
+#charCount.warning {
+    color: var(--sickly-yellow);
+    animation: count-warning 0.5s ease-in-out infinite;
+}
+
+#charCount.danger {
+    color: var(--blood-red);
+    animation: count-danger 0.3s ease-in-out infinite;
+}
+
+@keyframes count-warning {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes count-danger {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px var(--blood-red); }
+    50% { transform: scale(1.2); text-shadow: 0 0 20px var(--blood-red); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .séance-circle {
+        padding: 1.5rem;
+    }
+    
+    .ouija-board {
+        padding: 1.5rem;
+    }
+    
+    .letter {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .séance-circle {
+        padding: 1rem;
+    }
+    
+    .ouija-board {
+        padding: 1rem;
+    }
+    
+    .letter {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+        gap: 0.3rem;
+    }
+    
+    .letter-row {
+        gap: 0.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .board-text {
+        font-size: 1.5rem;
+    }
+    
+    .board-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .board-footer {
+        margin-top: 1.5rem;
+        gap: 0.8rem;
+    }
+    
+    .goodbye {
+        font-size: 2rem;
+        padding: 1rem 2.5rem;
+        min-width: 180px;
+        letter-spacing: 2px;
+    }
+    
+    .planchette {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .planchette-eye {
+        font-size: 1.5rem;
+    }
+    
+    .current-message {
+        font-size: 1.2rem;
+        min-height: 80px;
+        padding: 0.8rem;
+    }
+    
+    .message-display {
+        padding: 1.5rem;
+        min-height: 120px;
+    }
+    
+    .typing-indicator {
+        font-size: 2.5rem;
+    }
+    
+    .typing-left {
+        left: -35px;
+    }
+    
+    .typing-right {
+        right: -35px;
+    }
+    
+    .letter.special {
+        padding: 0 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ouija-section {
+        margin: 1.5rem 0;
+    }
+    
+    .séance-circle {
+        padding: 0.5rem;
+    }
+    
+    .ouija-board {
+        padding: 0.8rem;
+    }
+    
+    .letter {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+    
+    .letter-row {
+        gap: 0.2rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .board-text {
+        font-size: 1.2rem;
+    }
+    
+    .board-ornament {
+        font-size: 1rem;
+    }
+    
+    .board-header {
+        margin-bottom: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .board-footer {
+        margin-top: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .goodbye {
+        font-size: 1.6rem;
+        padding: 0.8rem 2rem;
+        min-width: 160px;
+        letter-spacing: 1px;
+    }
+    
+    .planchette {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .planchette-eye {
+        font-size: 1.2rem;
+    }
+    
+    .current-message {
+        font-size: 1.1rem;
+        min-height: 70px;
+        padding: 0.5rem;
+        line-height: 1.6;
+    }
+    
+    .message-display {
+        padding: 1rem;
+        min-height: 100px;
+    }
+    
+    .message-counter {
+        font-size: 0.8rem;
+    }
+    
+    .typing-indicator {
+        font-size: 2rem;
+    }
+    
+    .typing-left {
+        left: -30px;
+    }
+    
+    .typing-right {
+        right: -30px;
+    }
+    
+    .letter.special {
+        padding: 0 0.6rem;
+        font-size: 0.8rem;
+        width: auto;
+        min-width: 60px;
+    }
+}
+
+@media (max-width: 360px) {
+    .letter {
+        width: 24px;
+        height: 24px;
+        font-size: 0.9rem;
+    }
+    
+    .goodbye {
+        font-size: 1.4rem;
+        padding: 0.6rem 1.5rem;
+        min-width: 140px;
+    }
+    
+    .typing-indicator {
+        font-size: 1.5rem;
+    }
+    
+    .typing-left {
+        left: -25px;
+    }
+    
+    .typing-right {
+        right: -25px;
+    }
+}

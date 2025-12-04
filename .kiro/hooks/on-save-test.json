@@ -1,0 +1,13 @@
+{
+  "name": "Test on Save",
+  "description": "Automatically check for errors when saving JavaScript files",
+  "trigger": {
+    "type": "onSave",
+    "filePattern": "**/*.js"
+  },
+  "action": {
+    "type": "message",
+    "content": "Check this file for any syntax errors, console.log statements that should be removed, or potential bugs. Be concise."
+  },
+  "enabled": true
+}

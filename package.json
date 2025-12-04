@@ -1,0 +1,17 @@
+{
+  "name": "whispers-from-the-void",
+  "version": "1.0.0",
+  "description": "A haunted anonymous confession app with supernatural Ouija board interface",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "keywords": ["haunted", "confession", "ouija", "horror", "anonymous"],
+  "author": "Kiroween Hackathon",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}

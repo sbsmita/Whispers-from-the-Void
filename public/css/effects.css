@@ -1,0 +1,672 @@
+/* Horror Effects - Particle System & Confession Feed */
+
+/* Particle Canvas */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Void Section */
+.void-section {
+    margin: 4rem 0;
+    padding: 2rem;
+    position: relative;
+}
+
+.void-title {
+    font-family: 'Creepster', cursive;
+    font-size: 3rem;
+    text-align: center;
+    color: var(--ghost-white);
+    margin-bottom: 2rem;
+    text-shadow: 
+        0 0 20px var(--blood-red),
+        0 0 40px var(--blood-red),
+        3px 3px 0 rgba(0, 0, 0, 0.8);
+    animation: title-pulse 2s ease-in-out infinite;
+}
+
+@keyframes title-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 
+            0 0 20px var(--blood-red),
+            0 0 40px var(--blood-red),
+            3px 3px 0 rgba(0, 0, 0, 0.8);
+    }
+    50% { 
+        transform: scale(1.05);
+        text-shadow: 
+            0 0 30px var(--blood-red),
+            0 0 60px var(--blood-red),
+            0 0 80px var(--blood-red),
+            3px 3px 0 rgba(0, 0, 0, 0.8);
+    }
+}
+
+.skull {
+    display: inline-block;
+    animation: skull-rotate 3s ease-in-out infinite;
+}
+
+@keyframes skull-rotate {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+}
+
+/* Void Container */
+.void-container {
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem;
+    background: radial-gradient(ellipse at center,
+        rgba(26, 26, 46, 0.4) 0%,
+        rgba(10, 10, 10, 0.8) 50%,
+        var(--void-black) 100%);
+    border: 2px solid rgba(139, 0, 0, 0.3);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 
+        inset 0 0 50px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(139, 0, 0, 0.3);
+}
+
+.void-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            rgba(139, 0, 0, 0.03) 3px,
+            rgba(139, 0, 0, 0.03) 6px
+        );
+    pointer-events: none;
+    animation: scan-lines 8s linear infinite;
+}
+
+@keyframes scan-lines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(6px); }
+}
+
+/* Custom Scrollbar */
+.void-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.void-container::-webkit-scrollbar-track {
+    background: rgba(10, 10, 10, 0.8);
+    border-radius: 10px;
+}
+
+.void-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--blood-red) 0%, #4a0000 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--blood-red);
+}
+
+.void-container::-webkit-scrollbar-thumb:hover {
+    background: var(--blood-red);
+    box-shadow: 0 0 20px var(--blood-red);
+}
+
+/* Empty State */
+.void-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    animation: fade-pulse 3s ease-in-out infinite;
+}
+
+.void-empty p {
+    font-family: 'Creepster', cursive;
+    font-size: 1.5rem;
+    color: var(--ghost-white);
+    opacity: 0.5;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    margin-bottom: 1rem;
+}
+
+.whisper {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.2rem !important;
+    font-style: italic;
+    opacity: 0.3 !important;
+    animation: whisper-fade 2s ease-in-out infinite;
+}
+
+@keyframes whisper-fade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes fade-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Confession Cards */
+.confession {
+    position: relative;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    background: linear-gradient(135deg,
+        rgba(26, 26, 46, 0.6) 0%,
+        rgba(10, 10, 10, 0.8) 100%);
+    border: 2px solid rgba(0, 255, 65, 0.2);
+    border-radius: 15px;
+    box-shadow: 
+        0 5px 20px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(0, 255, 65, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: confession-materialize 1s ease-out,
+               confession-float 4s ease-in-out infinite;
+    animation-delay: 0s, 1s;
+    transform-origin: center;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes confession-materialize {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px) rotateX(90deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.5;
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateX(0deg);
+        filter: blur(0);
+    }
+}
+
+@keyframes confession-float {
+    0%, 100% { transform: translateY(0) rotateZ(0deg); }
+    25% { transform: translateY(-5px) rotateZ(0.5deg); }
+    75% { transform: translateY(5px) rotateZ(-0.5deg); }
+}
+
+.confession::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg,
+        var(--spectral-green),
+        var(--blood-red),
+        var(--spectral-green));
+    border-radius: 15px;
+    opacity: 0;
+    z-index: -1;
+    animation: border-glow 3s ease-in-out infinite;
+}
+
+@keyframes border-glow {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
+}
+
+.confession:hover {
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(0, 255, 65, 0.4),
+        inset 0 0 30px rgba(0, 255, 65, 0.1);
+    border-color: var(--spectral-green);
+}
+
+.confession-text {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.3rem;
+    color: var(--ghost-white);
+    line-height: 1.6;
+    text-shadow: 
+        0 0 5px rgba(0, 255, 65, 0.3),
+        1px 1px 2px rgba(0, 0, 0, 0.8);
+    animation: text-decay 0.3s steps(3) infinite;
+    position: relative;
+}
+
+@keyframes text-decay {
+    0%, 90%, 100% { opacity: 1; filter: blur(0); }
+    93% { opacity: 0.95; filter: blur(0.3px); }
+    96% { opacity: 0.98; filter: blur(0.1px); }
+}
+
+.confession-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+    font-size: 0.9rem;
+    color: var(--ghost-white);
+    opacity: 0.6;
+}
+
+.confession-time {
+    font-family: 'Special Elite', monospace;
+    animation: time-flicker 2s steps(2) infinite;
+}
+
+@keyframes time-flicker {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.4; }
+}
+
+.confession-id {
+    font-family: 'Special Elite', monospace;
+    color: var(--spectral-green);
+    text-shadow: 0 0 5px var(--spectral-green);
+}
+
+/* Confession Decay (older confessions) */
+.confession.decaying {
+    animation: confession-decay 3s ease-out forwards;
+}
+
+@keyframes confession-decay {
+    0% {
+        opacity: 1;
+        filter: blur(0) grayscale(0);
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(5px) grayscale(1);
+        transform: scale(0.9) translateY(20px);
+    }
+}
+
+/* Ectoplasm Effect on New Confession */
+.confession.new::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+        rgba(0, 255, 65, 0.3) 0%,
+        transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: ectoplasm-burst 1.5s ease-out;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+@keyframes ectoplasm-burst {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
+/* Screen Glitch Effect */
+@keyframes screen-glitch {
+    0%, 100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+        filter: hue-rotate(90deg);
+    }
+    40% {
+        transform: translate(2px, -2px);
+        filter: hue-rotate(180deg);
+    }
+    60% {
+        transform: translate(-2px, -2px);
+        filter: hue-rotate(270deg);
+    }
+    80% {
+        transform: translate(2px, 2px);
+        filter: hue-rotate(360deg);
+    }
+}
+
+.glitch-effect {
+    animation: screen-glitch 0.3s ease-out;
+}
+
+/* Blood Drip Effect */
+.blood-drip {
+    position: absolute;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, var(--blood-red) 0%, transparent 100%);
+    animation: drip 2s ease-in forwards;
+}
+
+@keyframes drip {
+    0% {
+        height: 0;
+        top: 0;
+    }
+    100% {
+        height: 100px;
+        top: 100%;
+    }
+}
+
+/* Possession Effect (for typing) */
+@keyframes possession-shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+    20% { transform: translate(1px, 1px) rotate(0.5deg); }
+    30% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+    40% { transform: translate(1px, -1px) rotate(0.5deg); }
+    50% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+    60% { transform: translate(1px, 1px) rotate(0.5deg); }
+    70% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+    80% { transform: translate(1px, -1px) rotate(0.5deg); }
+    90% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+}
+
+.possessed {
+    animation: possession-shake 0.5s ease-in-out infinite;
+}
+
+/* Reduced Motion Overrides */
+@media (prefers-reduced-motion: reduce) {
+    .confession {
+        animation: none;
+        opacity: 1;
+    }
+    
+    .confession-text {
+        animation: none;
+    }
+    
+    .void-empty {
+        animation: none;
+    }
+    
+    .skull {
+        animation: none;
+    }
+}
+
+/* Haunted Image Overlay */
+.haunted-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+                rgba(139, 0, 0, 0.3) 0%, 
+                rgba(0, 0, 0, 0.95) 50%,
+                rgba(0, 0, 0, 1) 100%);
+    z-index: 10000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.haunted-overlay.active {
+    display: flex !important;
+    opacity: 1 !important;
+    animation: haunted-appear 0.3s ease-out forwards,
+               overlay-pulse 2s ease-in-out infinite;
+}
+
+@keyframes haunted-appear {
+    0% {
+        opacity: 0;
+        background: rgba(0, 0, 0, 0);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes overlay-pulse {
+    0%, 100% {
+        background: radial-gradient(circle at center, 
+                    rgba(139, 0, 0, 0.3) 0%, 
+                    rgba(0, 0, 0, 0.95) 50%,
+                    rgba(0, 0, 0, 1) 100%);
+    }
+    50% {
+        background: radial-gradient(circle at center, 
+                    rgba(139, 0, 0, 0.5) 0%, 
+                    rgba(0, 0, 0, 0.98) 50%,
+                    rgba(0, 0, 0, 1) 100%);
+    }
+}
+
+.haunted-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    filter: contrast(1.5) brightness(0.8) saturate(0.5)
+            drop-shadow(0 0 50px var(--blood-red))
+            drop-shadow(0 0 100px var(--blood-red))
+            drop-shadow(0 0 150px rgba(139, 0, 0, 0.8));
+    animation: haunted-pulse 1.5s ease-in-out infinite,
+               haunted-glitch 0.2s steps(4) infinite,
+               haunted-shake 0.1s ease-in-out infinite,
+               haunted-zoom 4s ease-in-out;
+    transform-origin: center;
+}
+
+@keyframes haunted-pulse {
+    0%, 100% {
+        filter: contrast(1.5) brightness(0.8) saturate(0.5)
+                drop-shadow(0 0 50px var(--blood-red))
+                drop-shadow(0 0 100px var(--blood-red));
+    }
+    50% {
+        filter: contrast(2) brightness(0.6) saturate(0.3)
+                drop-shadow(0 0 100px var(--blood-red))
+                drop-shadow(0 0 200px var(--blood-red))
+                drop-shadow(0 0 250px var(--spectral-green));
+    }
+}
+
+@keyframes haunted-glitch {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    10% {
+        transform: translate(-8px, 8px) scale(1.02);
+    }
+    20% {
+        transform: translate(8px, -8px) scale(0.98);
+    }
+    30% {
+        transform: translate(-8px, -8px) scale(1.01);
+    }
+    40% {
+        transform: translate(8px, 8px) scale(0.99);
+    }
+    50% {
+        transform: translate(-5px, 5px) scale(1.02);
+    }
+    60% {
+        transform: translate(5px, -5px) scale(0.98);
+    }
+    70% {
+        transform: translate(-5px, -5px) scale(1.01);
+    }
+    80% {
+        transform: translate(5px, 5px) scale(0.99);
+    }
+    90% {
+        transform: translate(-3px, 3px) scale(1);
+    }
+}
+
+@keyframes haunted-shake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-1deg);
+    }
+    75% {
+        transform: rotate(1deg);
+    }
+}
+
+@keyframes haunted-zoom {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .void-section {
+        margin: 3rem 0;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .void-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .skull {
+        font-size: 1.5rem;
+    }
+    
+    .confession {
+        padding: 1.2rem;
+        margin: 1rem 0;
+    }
+    
+    .confession-text {
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+    
+    .confession-meta {
+        font-size: 0.85rem;
+    }
+    
+    .void-container {
+        max-height: 400px;
+        padding: 1rem;
+        min-height: 300px;
+    }
+    
+    .void-empty {
+        padding: 3rem 1.5rem;
+    }
+    
+    .void-empty p {
+        font-size: 1.2rem;
+    }
+    
+    .whisper {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .void-section {
+        margin: 2rem 0;
+        padding: 1rem;
+    }
+    
+    .void-title {
+        font-size: 1.6rem;
+    }
+    
+    .skull {
+        font-size: 1.2rem;
+    }
+    
+    .confession {
+        padding: 1rem;
+        margin: 0.8rem 0;
+    }
+    
+    .confession-text {
+        font-size: 1rem;
+    }
+    
+    .confession-meta {
+        font-size: 0.75rem;
+        flex-direction: column;
+        gap: 0.3rem;
+        align-items: flex-start;
+    }
+    
+    .void-container {
+        max-height: 350px;
+        padding: 0.8rem;
+        min-height: 250px;
+    }
+    
+    .void-empty {
+        padding: 2rem 1rem;
+    }
+    
+    .void-empty p {
+        font-size: 1rem;
+    }
+    
+    .whisper {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .void-title {
+        font-size: 1.4rem;
+    }
+    
+    .confession-text {
+        font-size: 0.95rem;
+    }
+    
+    .void-container {
+        max-height: 300px;
+    }
+}

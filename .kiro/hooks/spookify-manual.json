@@ -1,0 +1,12 @@
+{
+  "name": "🎃 Spookify Code",
+  "description": "Manually intensify horror elements in the current file",
+  "trigger": {
+    "type": "manual"
+  },
+  "action": {
+    "type": "message",
+    "content": "Make the current file MORE haunted and scary. Add more horror effects, creepier animations, unsettling sounds, or disturbing visual elements. Follow the horror design system steering rules. Be creative and push the boundaries of horror UX!"
+  },
+  "enabled": true
+}

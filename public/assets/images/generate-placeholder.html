@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Haunted Placeholder</title>
+    <style>
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            font-family: monospace;
+            color: #fff;
+        }
+        canvas {
+            border: 2px solid #8b0000;
+            box-shadow: 0 0 50px #8b0000;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #8b0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <h2>Haunted Image Placeholder Generator</h2>
+    <canvas id="canvas" width="1920" height="1080"></canvas>
+    <button onclick="downloadImage()">Download as haunted.jpg</button>
+    <p>Right-click the canvas and "Save Image As..." or use the button above</p>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Dark background
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Add noise
+        for (let i = 0; i < 5000; i++) {
+            ctx.fillStyle = `rgba(139, 0, 0, ${Math.random() * 0.3})`;
+            ctx.fillRect(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 3,
+                Math.random() * 3
+            );
+        }
+        
+        // Ghostly figure (simple)
+        ctx.fillStyle = 'rgba(224, 224, 224, 0.1)';
+        ctx.beginPath();
+        ctx.ellipse(960, 400, 200, 300, 0, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Eyes
+        ctx.fillStyle = '#00ff41';
+        ctx.shadowBlur = 50;
+        ctx.shadowColor = '#00ff41';
+        ctx.beginPath();
+        ctx.arc(900, 350, 30, 0, Math.PI * 2);
+        ctx.arc(1020, 350, 30, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Creepy text
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = '#8b0000';
+        ctx.fillStyle = '#8b0000';
+        ctx.font = 'bold 120px serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('THE VOID', 960, 800);
+        ctx.fillText('SEES YOU', 960, 950);
+        
+        // Add more atmospheric effects
+        ctx.shadowBlur = 0;
+        for (let i = 0; i < 100; i++) {
+            ctx.fillStyle = `rgba(0, 255, 65, ${Math.random() * 0.2})`;
+            ctx.beginPath();
+            ctx.arc(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height,
+                Math.random() * 5,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+        }
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'haunted.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+    </script>
+</body>
+</html>

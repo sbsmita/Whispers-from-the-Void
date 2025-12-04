@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whispers from the Void</title>
+    <meta name="description" content="Share your darkest secrets through the supernatural veil">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ouija.css">
+    <link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+    <!-- Atmospheric Background Effects -->
+    <div class="atmosphere">
+        <div class="blood-moon"></div>
+        <div class="fog-layer fog-1"></div>
+        <div class="fog-layer fog-2"></div>
+        <canvas id="particles"></canvas>
+        <div class="shadow-figure shadow-1"></div>
+        <div class="shadow-figure shadow-2"></div>
+    </div>
+
+    <!-- Candles -->
+    <div class="candles">
+        <div class="candle candle-left"></div>
+        <div class="candle candle-right"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title glitch" data-text="Whispers from the Void">
+                Whispers from the Void
+            </h1>
+            <p class="subtitle">
+                Speak your sins into the darkness... the void listens
+            </p>
+        </header>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="soundToggle" class="control-btn" aria-label="Toggle sound">
+                <span class="sound-icon">🔊</span>
+            </button>
+            <button id="motionToggle" class="control-btn" aria-label="Toggle animations">
+                <span class="motion-icon">✨</span>
+            </button>
+        </div>
+
+        <!-- Ouija Board Section -->
+        <section class="ouija-section" id="ouijaSection">
+            <div class="séance-circle">
+                <div class="ouija-board">
+                    <div class="board-header">
+                        <span class="board-text mystical clickable" data-action="yes" title="Ask the spirits a yes/no question">YES</span>
+                        <span class="board-ornament">☽ ✦ ☾</span>
+                        <span class="board-text mystical clickable" data-action="no" title="Ask the spirits a yes/no question">NO</span>
+                    </div>
+                    
+                    <div class="letter-rows">
+                        <div class="letter-row">
+                            <span class="letter" data-letter="A">A</span>
+                            <span class="letter" data-letter="B">B</span>
+                            <span class="letter" data-letter="C">C</span>
+                            <span class="letter" data-letter="D">D</span>
+                            <span class="letter" data-letter="E">E</span>
+                            <span class="letter" data-letter="F">F</span>
+                            <span class="letter" data-letter="G">G</span>
+                            <span class="letter" data-letter="H">H</span>
+                            <span class="letter" data-letter="I">I</span>
+                        </div>
+                        <div class="letter-row">
+                            <span class="letter" data-letter="J">J</span>
+                            <span class="letter" data-letter="K">K</span>
+                            <span class="letter" data-letter="L">L</span>
+                            <span class="letter" data-letter="M">M</span>
+                            <span class="letter" data-letter="N">N</span>
+                            <span class="letter" data-letter="O">O</span>
+                            <span class="letter" data-letter="P">P</span>
+                            <span class="letter" data-letter="Q">Q</span>
+                            <span class="letter" data-letter="R">R</span>
+                        </div>
+                        <div class="letter-row">
+                            <span class="letter" data-letter="S">S</span>
+                            <span class="letter" data-letter="T">T</span>
+                            <span class="letter" data-letter="U">U</span>
+                            <span class="letter" data-letter="V">V</span>
+                            <span class="letter" data-letter="W">W</span>
+                            <span class="letter" data-letter="X">X</span>
+                            <span class="letter" data-letter="Y">Y</span>
+                            <span class="letter" data-letter="Z">Z</span>
+                        </div>
+                        <div class="letter-row number-row">
+                            <span class="letter" data-letter="1">1</span>
+                            <span class="letter" data-letter="2">2</span>
+                            <span class="letter" data-letter="3">3</span>
+                            <span class="letter" data-letter="4">4</span>
+                            <span class="letter" data-letter="5">5</span>
+                            <span class="letter" data-letter="6">6</span>
+                            <span class="letter" data-letter="7">7</span>
+                            <span class="letter" data-letter="8">8</span>
+                            <span class="letter" data-letter="9">9</span>
+                            <span class="letter" data-letter="0">0</span>
+                        </div>
+                    </div>
+
+                    <div class="board-footer">
+                        <span class="letter special" data-letter=" ">SPACE</span>
+                        <span class="letter special" data-letter="BACK">⌫</span>
+                        <span class="board-ornament">✦ ☠ ✦</span>
+                        <button class="letter goodbye" id="submitBtn">SUBMIT</button>
+                    </div>
+
+                    <!-- Planchette -->
+                    <div class="planchette" id="planchette">
+                        <div class="planchette-eye">👁</div>
+                    </div>
+                </div>
+
+                <!-- Message Display -->
+                <div class="message-display">
+                    <div class="typing-indicator typing-left" id="typingLeft">👻</div>
+                    <div class="typing-indicator typing-right" id="typingRight">👻</div>
+                    <p id="currentMessage" class="current-message">Your confession materializes here...</p>
+                    <div class="message-counter">
+                        <span id="charCount">0</span> / 500 characters
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Void - Confession Feed -->
+        <section class="void-section">
+            <h2 class="void-title">
+                <span class="skull">💀</span>
+                The Void Speaks
+                <span class="skull">💀</span>
+            </h2>
+            <div class="void-container" id="voidContainer" role="log" aria-live="polite" aria-atomic="false">
+                <!-- Confessions appear here -->
+                <div class="void-empty">
+                    <p>The void is silent... for now...</p>
+                    <p class="whisper">Be the first to confess your sins</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="summoning-circle">
+            <div class="pentagram"></div>
+            <p class="summoning-text">Channeling spirits...</p>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="assets/sounds/background.mp3" type="audio/mpeg">
+        <source src="assets/sounds/background.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="js/effects.js"></script>
+    <script src="js/ouija.js"></script>
+    <script src="js/confessions.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

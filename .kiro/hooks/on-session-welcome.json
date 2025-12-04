@@ -1,0 +1,12 @@
+{
+  "name": "Welcome to the Void",
+  "description": "Greet user with spooky message on new session",
+  "trigger": {
+    "type": "onSessionStart"
+  },
+  "action": {
+    "type": "message",
+    "content": "👻 Welcome back to Whispers from the Void... The spirits have been waiting for you. Remember: every element must contribute to the haunting atmosphere. Follow the horror design system at all times. What dark creation shall we summon today?"
+  },
+  "enabled": true
+}
